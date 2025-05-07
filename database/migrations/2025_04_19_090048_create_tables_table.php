@@ -15,12 +15,9 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('type', length: 100);
-            $table->integer('count');
-            $table->string('description', length: 100);
             $table->foreignIdFor(Restaurants::class)->constrained()->onDelete('cascade');
-            
+            $table->integer('count')->default(0);
             // $table->string('location', length: 100);
-            $table->integer('table_number');
             $table->integer('number_of_persons');
         });
     }
@@ -30,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        
         Schema::dropIfExists('tables');
     }
 };

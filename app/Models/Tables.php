@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tables extends Model
 {
+    
+
+    public $timestamps = false; // Prevents Laravel from using 'updated_at' and 'created_at'
+
+
     protected $fillable = [
-        'type',
-        'count',
-        'description',
-        'restaurant_id'
+        'type', 
+        'restaurant_id',
+        'number_of_persons'
     ];
 
     public function restaurant()
@@ -22,6 +26,8 @@ class Tables extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Reservation::class,'table_id');
     }
+
+    
 }

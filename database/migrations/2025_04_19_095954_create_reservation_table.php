@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Tables;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Restaurants;
 
 return new class extends Migration
 {
@@ -15,13 +17,17 @@ return new class extends Migration
             $table->id('id');
             // $table->foreignId('user_id');
            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
-           
+            //$table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
             // $table->foreignId('res_id');
             $table->string('name', length: 100);
-            $table->string('number', length: 100);
-            $table->integer('table_number');
+            $table->integer('number_of_persons');
+         
             $table->text('notes');
+            $table->dateTime('reserve_from'); 
+            $table->dateTime( 'reserve_until'); 
+
+            $table->string('status')->default('upcoming');
             $table->timestamps();
         });
     }
