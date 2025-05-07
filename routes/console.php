@@ -13,7 +13,7 @@ Artisan::command('inspire', function () {
 
 
 return function (Schedule $schedule) {
-    // Schedule reservation cleanup every hour
-    $schedule->command('cleanup:reservations')->hourly();
-  
+    // Run cleanup every hour to remove expired reservations and update counts
+    $schedule->command('cleanup:reservations')->everyMinute();
 };
+
