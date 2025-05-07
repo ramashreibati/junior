@@ -21,14 +21,5 @@ class TableObserver
               ->update(['count' => Tables::whereRaw('LOWER(type) = ?', [strtolower($table->type)])->count()]);
     }
 
-    public function reservationDeleted(Reservation $reservation): void
-    {
-        // Update count when a reservation expires and is removed
-        $tableType = Tables::where('id', $reservation->table_id)->value('type');
-
-        if ($tableType) {
-            Tables::whereRaw('LOWER(type) = ?', [strtolower($tableType)])
-                  ->update(['count' => Tables::whereRaw('LOWER(type) = ?', [strtolower($tableType)])->count()]);
-        }
-    }
+   
 }
