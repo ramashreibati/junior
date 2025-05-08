@@ -195,7 +195,9 @@ Route::post('/restaurant/{restaurant}/reserve', [CustomerController::class, 'res
 
 
 
-
+//event book
+Route::post('/restaurant/{restaurant}/book-event', [CustomerController::class, 'bookEvent'])
+    ->middleware(['auth:sanctum', RoleMiddleware::class . ':1'])->name('dashboard.customer');
 
 
 

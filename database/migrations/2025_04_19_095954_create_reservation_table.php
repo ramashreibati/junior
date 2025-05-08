@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('reservation', function (Blueprint $table) {
             $table->id('id');
-            // $table->foreignId('user_id');
-           $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            //$table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+           $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
-            // $table->foreignId('res_id');
             $table->string('name', length: 100);
             $table->integer('number_of_persons');
-         
             $table->text('notes');
             $table->dateTime('reserve_from'); 
             $table->dateTime( 'reserve_until'); 

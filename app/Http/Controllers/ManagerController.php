@@ -21,7 +21,7 @@ class ManagerController extends Controller
 
         public function getRatingsAndReviews()
         {
-            // The RoleMiddleware already verified that the user is a manager!
+           
             $ratingsReviews = UserRate::with(['user', 'restaurants'])->get();
     
             return response()->json([

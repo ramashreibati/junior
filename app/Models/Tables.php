@@ -4,21 +4,27 @@ namespace App\Models;
 
 use App\Models\Reservation;
 use App\Models\Restaurants;
+use App\Models\EventBooking;
 use Illuminate\Database\Eloquent\Model;
 
 class Tables extends Model
 {
-    
+   
 
-    public $timestamps = false; // Prevents Laravel from using 'updated_at' and 'created_at'
-
+    public $timestamps = false;
 
     protected $fillable = [
-        'type', 
+        'type',
         'restaurant_id',
-        'number_of_persons'
+        'number_of_persons',
+        'count',
+        'is_available'
     ];
 
+    public function eventBookings()
+    {
+        return $this->belongsToMany(EventBooking::class, 'event_booking_tables', 'table_id', 'event_booking_id'); // ✅ Pivot table reference
+    }
     public function restaurant()
     {
         return $this->belongsTo(Restaurants::class);
@@ -26,8 +32,8 @@ class Tables extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reservation::class,'table_id');
+        return $this->hasMany(Reservation::class, 'table_id');
     }
 
-    
+   
 }

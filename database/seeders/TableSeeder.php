@@ -11,22 +11,24 @@ class TableSeeder extends Seeder
 {
     public function run()
     {
-        
-            // Get all unique table types and count rows per type
-            $types = DB::table('tables')
-                ->select('type', DB::raw('COUNT(*) as total_count'))
-                ->groupBy('type')
-                ->get();
+        $types = DB::table('tables')
+            ->select('type', DB::raw('COUNT(*) as total_tables'))
+            ->groupBy('type')
+            ->get();
 
-            // Ensure count reflects the number of tables for each type
-            foreach ($types as $type) {
-                DB::table('tables')
-                    ->whereRaw('LOWER(type) = ?', [strtolower($type->type)])
-                    ->update(['count' => $type->total_count]);
-            }
-
-           
+        foreach ($types as $type) {
+            DB::table('tables')
+                ->whereRaw('LOWER(type) = ?', [strtolower($type->type)])
+                ->whereNotIn('id', Reservation::where('reserve_until', '>', now())->pluck('table_id')) 
+                ->update([
+                    'count' => $type->total_tables,
+                    'is_available' => DB::table('tables')->whereRaw('LOWER(type) = ?', [strtolower($type->type)])
+                        ->whereNotIn('id', Reservation::where('reserve_until', '>', now())->pluck('table_id'))
+                        ->where('count', '>', 0)
+                        ->exists() ? 1 : 0 
+                ]);
+        }
+    }
 }
 
-}
 

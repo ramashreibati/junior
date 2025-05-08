@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('type', length: 100);
             $table->foreignIdFor(Restaurants::class)->constrained()->onDelete('cascade');
             $table->integer('count')->default(0);
+            $table->boolean('is_available')->default(true); 
+            // Grouped tables will share the same ID
             // $table->string('location', length: 100);
             $table->integer('number_of_persons');
         });
